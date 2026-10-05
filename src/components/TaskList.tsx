@@ -3,6 +3,7 @@ import { TaskItem } from './TaskItem'
 
 type TaskListProps = {
   tasks: Task[]
+  isFiltering: boolean
   onEdit: (task: Task) => void
   onDelete: (id: string) => void
   onStatusChange: (id: string, status: TaskStatus) => void
@@ -14,7 +15,16 @@ const columns: { status: TaskStatus; title: string }[] = [
   { status: 'done', title: 'Selesai' },
 ]
 
-export function TaskList({ tasks, onEdit, onDelete, onStatusChange }: TaskListProps) {
+export function TaskList({ tasks, isFiltering, onEdit, onDelete, onStatusChange }: TaskListProps) {
+  if (isFiltering && tasks.length === 0) {
+    return (
+      <section className="empty-results" aria-live="polite">
+        <h2>Tidak ada tugas yang cocok</h2>
+        <p>Coba ubah kata kunci atau pilihan filter.</p>
+      </section>
+    )
+  }
+
   return (
     <div className="task-board">
       {columns.map((column) => {
