@@ -20,6 +20,10 @@ const dateFormatter = new Intl.DateTimeFormat('id-ID', {
 })
 
 export function TaskItem({ task, onEdit, onDelete, onStatusChange }: TaskItemProps) {
+  const today = new Date()
+  const todayDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+  const isOverdue = Boolean(task.dueDate && task.dueDate < todayDate && task.status !== 'done')
+
   return (
     <article className="task-card">
       <div className="task-card-topline">
@@ -31,6 +35,12 @@ export function TaskItem({ task, onEdit, onDelete, onStatusChange }: TaskItemPro
       </div>
 
       <h3>{task.title}</h3>
+      {task.dueDate && (
+        <div className={`task-due-date${isOverdue ? ' task-overdue' : ''}`}>
+          <time dateTime={task.dueDate}>Tenggat: {dateFormatter.format(new Date(`${task.dueDate}T00:00:00`))}</time>
+          {isOverdue && <span className="overdue-label">Overdue</span>}
+        </div>
+      )}
       {task.description && <p className="task-description">{task.description}</p>}
 
       <div className="task-card-footer">

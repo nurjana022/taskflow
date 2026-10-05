@@ -12,6 +12,7 @@ const emptyTask: TaskInput = {
   description: '',
   status: 'todo',
   priority: 'medium',
+  dueDate: undefined,
 }
 
 export function TaskForm({ task, onSave, onCancel }: TaskFormProps) {
@@ -19,7 +20,9 @@ export function TaskForm({ task, onSave, onCancel }: TaskFormProps) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onSave({ ...form, title: form.title.trim(), description: form.description.trim() })
+    const input = { ...form, title: form.title.trim(), description: form.description.trim() }
+    if (!input.dueDate) delete input.dueDate
+    onSave(input)
   }
 
   return (
@@ -54,6 +57,15 @@ export function TaskForm({ task, onSave, onCancel }: TaskFormProps) {
           value={form.description}
           onChange={(event) => setForm({ ...form, description: event.target.value })}
           placeholder="Tambahkan detail atau catatan"
+        />
+      </label>
+
+      <label className="field">
+        <span>Tenggat <span className="optional">(opsional)</span></span>
+        <input
+          type="date"
+          value={form.dueDate ?? ''}
+          onChange={(event) => setForm({ ...form, dueDate: event.target.value || undefined })}
         />
       </label>
 

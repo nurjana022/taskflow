@@ -13,6 +13,7 @@ export type Task = {
   status: TaskStatus
   priority: TaskPriority
   createdAt: string
+  dueDate?: string
 }
 
 export type TaskInput = Omit<Task, 'id' | 'createdAt'>

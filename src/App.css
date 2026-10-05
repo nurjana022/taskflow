@@ -336,6 +336,24 @@
   font-weight: 680;
 }
 
+.task-due-date {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.task-overdue {
+  color: #a44d44;
+}
+
+.overdue-label {
+  font-weight: 700;
+}
+
 .task-description {
   margin-top: 7px;
   color: var(--muted);
